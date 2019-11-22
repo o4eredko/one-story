@@ -20,11 +20,12 @@ def api_root(request, format=None):
 		'registration': reverse('account-register', request=request, format=format),
 		'token-login': reverse('account-token', request=request, format=format),
 		'token-refresh': reverse('account-refresh', request=request, format=format),
+		'token-verify': reverse('account-verify', request=request, format=format),
 	})
 
 
 class PostViewSet(LikesMixin, viewsets.ModelViewSet):
-	queryset = Post.objects.all().order_by('id')
+	queryset = Post.objects.all().order_by('-created')
 	serializer_class = PostSerializer
 	permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
 	pagination_class = PageNumberPagination
